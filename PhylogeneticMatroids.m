@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (*This should be the directory that all of the files are in*)
-SetDirectory["/Users/bkholler/Downloads/TreeIDFor_K3P_CFN/FilesForPaper"];
+SetDirectory["/Users/bkholler/Downloads/MatroidIdentifiability"];
 
 
 jacobianMatrix[map_, vars_] := Module[{curRow,outMat},
@@ -131,9 +131,6 @@ randomRealParameters[symbolicFunction_] := symbolicFunction /. varSubs[Variables
 
 
 randomIntParameters[poly_,p_] := poly /. varSubs[Variables[poly],  RandomInteger[{0,p-1}, Length[Variables[poly]]]];
-
-
-
 
 
 (* m, the number of leaves of the trees that intPairs represent,
@@ -516,11 +513,12 @@ jacobianMatrix[map, vars]
  * trials, for j such that startSize \[LessEqual] j \[LessEqual] min{dim1, dim2}, this algorithm will randomly sample trials number of sets of size j and see if they are certificates
  * Outputs a certificate that dim(M_1 \cap M_2) < min(dim1, dim2)
 *)
-matroidSeparate[jac1_, jac2_, dim1_, dim2_, startSize_, trials_] := Module[{numJac1, numJac2, trialSet, foundCert, certSet},
+matroidSeparate[jac1_, jac2_, dim1_, dim2_, startSize_, trials_] := Module[{numJac1, numJac2, trialSet, foundCert, certSet, p},
 
+p = RandomPrime[{1000,10000}];
 foundCert = False;
-numJac1 = randomRealParameters[jac1];
-numJac2 = randomRealParameters[jac2];
+numJac1 = Mod[randomIntParameters[jac1, p], p];
+numJac2 = Mod[randomIntParameters[jac2, p], p];
 
 If[dim1 === dim2,
 		
@@ -528,7 +526,7 @@ If[dim1 === dim2,
 		Do[
 			trialSet = RandomSample[Range[Length[jac1]], j];
 				
-			If[MatrixRank[numJac1[[trialSet]]] != MatrixRank[numJac2[[trialSet]]],
+			If[MatrixRank[numJac1[[trialSet]], Modulus -> p] != MatrixRank[numJac2[[trialSet]], Modulus -> p],
 				
 				If[MatrixRank[jac1[[trialSet]]] != MatrixRank[jac2[[trialSet]]],
 					
@@ -554,9 +552,9 @@ If[dim1 > dim2,
 		Do[
 			trialSet = RandomSample[Range[Length[jac1]], j];
 				
-			If[MatrixRank[numJac1[[trialSet]]] < j && MatrixRank[numJac2[[trialSet]]] == j,
+			If[MatrixRank[numJac1[[trialSet]], Modulus -> p] < j && MatrixRank[numJac2[[trialSet]], Modulus -> p] == j,
 				
-				If[MatrixRank[jac1[[trialSet]]] < j && MatrixRank[jac2[[trialSet]]] == j,
+				If[MatrixRank[jac1[[trialSet]]] < j,
 					
 					foundCert = True;
 					certSet = trialSet;
@@ -591,36 +589,36 @@ foundCert = False;
 If[dim1 === dim2,
 
 	Do[
-	alpha  = j*maxDegree;
- p = NextPrime[alpha,2];
- l = Ceiling[Log[epsilon]/Log[alpha/(p-1)]];
+		alpha  = j*maxDegree;
+		p = NextPrime[alpha,2];
+		l = Ceiling[Log[epsilon]/Log[alpha/(p-1)]];
 
- numJac1 =randomIntParameters[jac1,p];
- numJac2 = randomIntParameters[jac2, p];
+		numJac1 = randomIntParameters[jac1, p];
+		numJac2 = randomIntParameters[jac2, p];
 
-	       Do[
+		Do[
 			trialSet = RandomSample[Range[Length[jac1]], j];
 
 			If[MatrixRank[numJac1[[trialSet]],Modulus->p] != MatrixRank[numJac2[[trialSet]], Modulus -> p],
 		
-		Do[
+				Do[
 		
-		numJac1 = Mod[randomIntParameters[jac1,p],p];
-		numJac2 = Mod[randomIntParameters[jac2, p],p];
+					numJac1 = Mod[randomIntParameters[jac1, p], p];
+					numJac2 = Mod[randomIntParameters[jac2, p], p];
 
-		If[ MatrixRank[numJac1[[trialSet]],Modulus->p] === MatrixRank[numJac2[[trialSet]], Modulus -> p],
+					If[ MatrixRank[numJac1[[trialSet]],Modulus->p] === MatrixRank[numJac2[[trialSet]], Modulus -> p],
 
-			Break[];
-		];
+						Break[];
+					];
 
-	    ,{k,1,l}];
+				,{k,1,l}];
 
-		certSet = trialSet;
-		foundCert = True;
-		Break [];
+			certSet = trialSet;
+			foundCert = True;
+			Break [];
 			];
 			
-			, {i, 1, trials}];
+		, {i, 1, trials}];
 			
 		If[foundCert,
 			
@@ -633,35 +631,43 @@ If[dim1 === dim2,
 If[dim1 > dim2,
 		
 	Do[
+	
+		alpha  = j*maxDegree;
+		p = NextPrime[alpha,2];
+		l = Ceiling[Log[epsilon]/Log[alpha/(p-1)]];
+
+		numJac1 = randomIntParameters[jac1, p];
+		numJac2 = randomIntParameters[jac2, p];
+		
 		Do[
 			trialSet = RandomSample[Range[Length[jac1]], j];
 				
 			If[MatrixRank[numJac1[[trialSet]],Modulus->p] < j &&  MatrixRank[numJac2[[trialSet]], Modulus -> p] == j,
 		
-		Do[
+				Do[
 		
-		numJac1 = Mod[randomIntParameters[jac1,p],p];
-		numJac2 = Mod[randomIntParameters[jac2, p],p];
+					numJac1 = Mod[randomIntParameters[jac1,p],p];
+					numJac2 = Mod[randomIntParameters[jac2, p],p];
 
-		If[MatrixRank[numJac1[[trialSet]],Modulus->p] < j &&  MatrixRank[numJac2[[trialSet]], Modulus -> p] == j,
+					If[MatrixRank[numJac1[[trialSet]],Modulus->p] < j &&  MatrixRank[numJac2[[trialSet]], Modulus -> p] == j,
 
-			Break[];
-		];
+						Break[];
+					];
+					
+				,{k,1,l}];
 
-	    ,{k,1,l}];
-
-		certSet = trialSet;
-		foundCert = True;
-		Break [];
+				certSet = trialSet;
+				foundCert = True;
+				Break [];
 			];
 			
-			, {i, 1, trials}];
+		, {i, 1, trials}];
 			
 		If[foundCert,
 			
 			Break[]
 		];
-		
+
 	, {j, startSize, dim1}];
 ];
 
