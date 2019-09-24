@@ -1,9 +1,5 @@
 (* ::Package:: *)
 
-(*This should be the directory that all of the files are in*)
-SetDirectory["/Users/bkholler/Downloads/MatroidIdentifiability"];
-
-
 jacobianMatrix[map_, vars_] := Module[{curRow,outMat},
 	outMat = {};
 	
