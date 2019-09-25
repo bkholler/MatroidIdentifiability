@@ -12,7 +12,6 @@ All of the actual functions and algorithms are in PhylogeneticMatroids.m.
 2. unrooted4, unrooted5, unrooted6
     - Each of these files is just a list of the unrooted n leaf trees (for n = 4, 5, 6 respectively) given by their splits
 
-
 3. fourLeafOrbs, fiveLeafOrbs, sixLeafOrbs
     - A list of pairs of pairs of integers in the form {{i_1, i_2}, {i_3, i_4}} 
     where i_j corresponds to the i_jth tree in unrooted4, unrooted5, or unrooted6 respectively
@@ -23,10 +22,7 @@ All of the actual functions and algorithms are in PhylogeneticMatroids.m.
 4. certsCFN
     - Contains a list of the certificates for each pair of pairs of trees in the form {i, cert} 
     where i specifies the position of the pair of pairs in sixLeafOrbs
-    - 
-
-  
-  
+    
 5. CFN_6Leaf_Mixtures.nb
     - This notebook file verifies that the sets in certsCFN are in fact certificates as described in Algorithm 3.3
     - Running the ParallelDo loop in full may take a long time. We ran it in batches of about 1000 on normal computers. 
@@ -40,4 +36,7 @@ All of the actual functions and algorithms are in PhylogeneticMatroids.m.
     
 8. K3P_Networks.nb
     - This file contains the proof of Lemmas 5.7, 5.8 and 5.9 for the K3P model
+    
+9. CFN_last_pair.m2
+    - This file computes a degree bounded Grobner basis for the remaining pair of trees that matroidSeparate could not find     a certificate for
   
