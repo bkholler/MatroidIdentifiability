@@ -126,7 +126,7 @@ outRules
 randomRealParameters[symbolicFunction_] := symbolicFunction /. varSubs[Variables[symbolicFunction], RandomReal[{-1, 1}, Length[Variables[symbolicFunction]]]];
 
 
-randomIntParameters[poly_,p_] := poly /. varSubs[Variables[poly],  RandomInteger[{0,p-1}, Length[Variables[poly]]]];
+randomIntParameters[poly_,p_] := poly /. varSubs[Variables[poly],  RandomInteger[{0, p-1}, Length[Variables[poly]]]];
 
 
 (* m, the number of leaves of the trees that intPairs represent,
@@ -578,7 +578,7 @@ certSet
 
 
 
-matroidSeparateSZ[jac1_, jac2_, dim1_, dim2_,maxDegree_, startSize_, trials_, epsilon_] := Module[{p, l, numJac1, numJac2,trialSet, foundCert, certSet, alpha},
+matroidSeparateSZ[jac1_, jac2_, dim1_, dim2_, maxDegree_, startSize_, trials_, epsilon_] := Module[{p, l, numJac1, numJac2,trialSet, foundCert, certSet, alpha},
 
 foundCert = False;
 
@@ -586,7 +586,7 @@ If[dim1 === dim2,
 
 	Do[
 		alpha  = j*maxDegree;
-		p = NextPrime[alpha,2];
+		p = NextPrime[alpha,100];
 		l = Ceiling[Log[epsilon]/Log[alpha/(p-1)]];
 
 		numJac1 = randomIntParameters[jac1, p];
@@ -629,7 +629,7 @@ If[dim1 > dim2,
 	Do[
 	
 		alpha  = j*maxDegree;
-		p = NextPrime[alpha,2];
+		p = NextPrime[alpha,100];
 		l = Ceiling[Log[epsilon]/Log[alpha/(p-1)]];
 
 		numJac1 = randomIntParameters[jac1, p];
@@ -714,27 +714,51 @@ isCert
  * certSet, a certificate set confirming that dim(M_1 \cap M_2) < min(dim1, dim2)
  * Confirms that certSet is an independent set for the matroid associated to M_1 and not M_2 or vice versa numerically. This does not prove that dim(M_1 \cap M_2) < min(dim1, dim2). 
 *)
-confirmMatroidCertNum[jac1_, jac2_, dim1_, dim2_, certSet_] := Module[{isCert, numJac1, numJac2},
+confirmMatroidCertSZ[jac1_, jac2_, dim1_, dim2_, maxDegree_, epsilon_, certSet_] := Module[{isCert, numJac1, numJac2, alpha, j, p, l},
 
-isCert = False;
-numJac1 = randomRealParameters[jac1];
-numJac2 = randomRealParameters[jac2];
+isCert = True;
 
-If[dim1 == dim2,
 
-	If[MatrixRank[numJac1[[certSet]]] != MatrixRank[numJac2[[certSet]]],
+If[dim1 === dim2,
+
+		alpha  = Length[certSet]*maxDegree;
+		p = NextPrime[alpha, 100];
+		l = Ceiling[Log[epsilon]/Log[alpha/(p-1)]];
 		
-		isCert = True
-	];
+		Do[
+		
+			numJac1 = Mod[randomIntParameters[jac1, p], p];
+			numJac2 = Mod[randomIntParameters[jac2, p], p];
+
+				If[MatrixRank[numJac1[[certSet]], Modulus->p] === MatrixRank[numJac2[[certSet]], Modulus -> p],
+					
+					isCert = False;
+					Break[];
+				];
+
+		,{k,1,l}];			
 ];
 
 If[dim1 > dim2,
 
-	If[MatrixRank[numJac1[[certSet]]] < Length[certSet] && MatrixRank[numJac2[[certSet]]] == Length[certSet],
+		alpha  = Length[certSet]*maxDegree;
+		p = NextPrime[alpha, 100];
+		l = Ceiling[Log[epsilon]/Log[alpha/(p-1)]];
 		
-		isCert = True
-	];
+		Do[
+		
+			numJac1 = Mod[randomIntParameters[jac1, p], p];
+			numJac2 = Mod[randomIntParameters[jac2, p], p];
+
+				If[MatrixRank[numJac1[[certSet]],Modulus->p] < Length[certSet] &&  MatrixRank[numJac2[[trialSet]], Modulus -> p] == Length[certSet],
+					
+					isCert = False;
+					Break[];
+				];
+
+		,{k, 1, l}];			
 ];
+
 
 isCert
 ];

@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      6050,        151]
-NotebookOptionsPosition[      5574,        136]
-NotebookOutlinePosition[      5910,        151]
-CellTagsIndexPosition[      5867,        148]
+NotebookDataLength[      7034,        163]
+NotebookOptionsPosition[      6558,        148]
+NotebookOutlinePosition[      6894,        163]
+CellTagsIndexPosition[      6851,        160]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -34,8 +34,7 @@ Cell[BoxData[
  CellChangeTimes->{{3.7758545190259447`*^9, 3.775854527608461*^9}, {
   3.775854594382847*^9, 3.775854609597035*^9}, {3.775854642077867*^9, 
   3.775854681123898*^9}, {3.775855000041513*^9, 3.775855013254736*^9}},
- CellLabel->
-  "In[253]:=",ExpressionUUID->"c42f450e-6b3f-4d3f-ac0c-991b83e66335"],
+ CellLabel->"In[75]:=",ExpressionUUID->"c42f450e-6b3f-4d3f-ac0c-991b83e66335"],
 
 Cell[BoxData[
  RowBox[{
@@ -59,9 +58,8 @@ Cell[BoxData[
     RowBox[{"Get", "[", "\"\<certsCFN\>\"", "]"}]}], ";"}]}]], "Input",
  CellChangeTimes->{{3.775854896806315*^9, 3.7758550378229227`*^9}, {
   3.775855640896529*^9, 3.7758557028931417`*^9}, {3.7758558271387663`*^9, 
-  3.775855830625676*^9}, {3.77586242760176*^9, 
-  3.7758624296085033`*^9}},ExpressionUUID->"e98f2849-39cc-4165-a9e9-\
-70b765c628d7"],
+  3.775855830625676*^9}, {3.77586242760176*^9, 3.7758624296085033`*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"e98f2849-39cc-4165-a9e9-70b765c628d7"],
 
 Cell[BoxData[
  RowBox[{
@@ -84,42 +82,48 @@ Cell[BoxData[
     RowBox[{"SetSharedVariable", "[", "certResults", "]"}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
-    RowBox[{"ParallelDo", "[", "\[IndentingNewLine]", 
+    RowBox[{"ParallelDo", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
      RowBox[{
       RowBox[{
-       RowBox[{"pairsOfTrees", " ", "=", " ", 
-        RowBox[{"intPairsToTrees", "[", 
-         RowBox[{"6", ",", " ", 
-          RowBox[{"sixLeafOrbs", "[", 
-           RowBox[{"[", "i", "]"}], "]"}]}], "]"}]}], ";", 
-       "\[IndentingNewLine]", "\[IndentingNewLine]", 
-       RowBox[{"jac1", " ", "=", " ", 
-        RowBox[{"phyloTreeMixJac", "[", 
-         RowBox[{"6", ",", " ", 
-          RowBox[{"pairsOfTrees", "[", 
-           RowBox[{"[", "1", "]"}], "]"}], ",", " ", "\"\<a\>\"", ",", " ", 
-          "\"\<b\>\"", ",", " ", "t", ",", " ", "\"\<CFN\>\"", ",", " ", 
-          "True"}], "]"}]}], ";", "\[IndentingNewLine]", 
-       RowBox[{"jac2", " ", "=", " ", 
-        RowBox[{"phyloTreeMixJac", "[", 
-         RowBox[{"6", ",", " ", 
-          RowBox[{"pairsOfTrees", "[", 
-           RowBox[{"[", "2", "]"}], "]"}], ",", " ", "\"\<a\>\"", ",", " ", 
-          "\"\<b\>\"", ",", " ", "t", ",", " ", "\"\<CFN\>\"", ",", " ", 
-          "True"}], "]"}]}], ";", "\[IndentingNewLine]", 
-       "\[IndentingNewLine]", 
-       RowBox[{"AppendTo", "[", 
-        RowBox[{"certResults", ",", 
-         RowBox[{"{", 
-          RowBox[{"i", ",", 
-           RowBox[{"confirmMatroidCertSym", "[", 
-            RowBox[{
-            "jac1", ",", " ", "jac2", ",", " ", "19", ",", " ", "19", ",", 
-             " ", 
-             RowBox[{"certsCFN", "[", 
-              RowBox[{"[", 
-               RowBox[{"i", ",", "2"}], "]"}], "]"}]}], "]"}]}], "}"}]}], 
-        "]"}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", ",", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"i", " ", "\[NotEqual]", " ", "22388"}], ",", 
+         "\[IndentingNewLine]", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"pairsOfTrees", " ", "=", " ", 
+           RowBox[{"intPairsToTrees", "[", 
+            RowBox[{"6", ",", " ", 
+             RowBox[{"sixLeafOrbs", "[", 
+              RowBox[{"[", "i", "]"}], "]"}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"jac1", " ", "=", " ", 
+           RowBox[{"phyloTreeMixJac", "[", 
+            RowBox[{"6", ",", " ", 
+             RowBox[{"pairsOfTrees", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", " ", "\"\<a\>\"", ",", 
+             " ", "\"\<b\>\"", ",", " ", "t", ",", " ", "\"\<CFN\>\"", ",", 
+             " ", "True"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"jac2", " ", "=", " ", 
+           RowBox[{"phyloTreeMixJac", "[", 
+            RowBox[{"6", ",", " ", 
+             RowBox[{"pairsOfTrees", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], ",", " ", "\"\<a\>\"", ",", 
+             " ", "\"\<b\>\"", ",", " ", "t", ",", " ", "\"\<CFN\>\"", ",", 
+             " ", "True"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"certResults", ",", 
+            RowBox[{"{", 
+             RowBox[{"i", ",", 
+              RowBox[{"confirmMatroidCertSym", "[", 
+               RowBox[{
+               "jac1", ",", " ", "jac2", ",", " ", "19", ",", " ", "19", ",", 
+                " ", 
+                RowBox[{"certsCFN", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"i", ",", "2"}], "]"}], "]"}]}], "]"}]}], "}"}]}], 
+           "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";"}], 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", ",", 
       RowBox[{"{", 
        RowBox[{"i", ",", "1", ",", "22773"}], "}"}]}], "]"}], 
     ";"}]}]}]], "Input",
@@ -130,8 +134,16 @@ Cell[BoxData[
    3.775856384325284*^9}, {3.7758565648988647`*^9, 3.7758565833681927`*^9}, {
    3.775856760569312*^9, 3.775856761529767*^9}, 3.775856819607937*^9, {
    3.7758624342572737`*^9, 3.775862437336635*^9}, {3.776012501432602*^9, 
-   3.776012506854437*^9}, {3.778328633681782*^9, 
-   3.778328655889948*^9}},ExpressionUUID->"e00f1c9e-7715-4bad-a25a-\
+   3.776012506854437*^9}, {3.778328633681782*^9, 3.778328655889948*^9}, {
+   3.7784355655172157`*^9, 3.77843558149235*^9}, {3.7784542118345833`*^9, 
+   3.778454212843789*^9}, {3.77845436878587*^9, 3.778454379503708*^9}, {
+   3.7784544395115833`*^9, 3.7784544909471684`*^9}, {3.778454526114724*^9, 
+   3.7784545629538717`*^9}, 3.7784547731394873`*^9, {3.778454861600089*^9, 
+   3.7784548830942287`*^9}, {3.778454984026876*^9, 3.778455106253512*^9}, {
+   3.778456497728714*^9, 3.778456521903513*^9}, {3.778456592651807*^9, 
+   3.77845659476335*^9}, {3.778457301690753*^9, 3.77845732351952*^9}, {
+   3.778461131693903*^9, 3.778461250918923*^9}, {3.7784613212946453`*^9, 
+   3.7784613256761837`*^9}},ExpressionUUID->"e00f1c9e-7715-4bad-a25a-\
 7ba24a5d2d7a"]
 },
 WindowSize->{1440, 775},
@@ -150,9 +162,9 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 707, 17, 73, "Input",ExpressionUUID->"c42f450e-6b3f-4d3f-ac0c-991b83e66335"],
-Cell[1268, 39, 1142, 24, 73, "Input",ExpressionUUID->"e98f2849-39cc-4165-a9e9-70b765c628d7"],
-Cell[2413, 65, 3157, 69, 304, "Input",ExpressionUUID->"e00f1c9e-7715-4bad-a25a-7ba24a5d2d7a"]
+Cell[558, 20, 703, 16, 73, "Input",ExpressionUUID->"c42f450e-6b3f-4d3f-ac0c-991b83e66335"],
+Cell[1264, 38, 1160, 23, 73, "Input",ExpressionUUID->"e98f2849-39cc-4165-a9e9-70b765c628d7"],
+Cell[2427, 63, 4127, 83, 388, "Input",ExpressionUUID->"e00f1c9e-7715-4bad-a25a-7ba24a5d2d7a"]
 }
 ]
 *)
