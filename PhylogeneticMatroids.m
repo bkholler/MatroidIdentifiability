@@ -1,5 +1,8 @@
 (* ::Package:: *)
 
+SetDirectory[NotebookDirectory[]];
+
+
 jacobianMatrix[map_, vars_] := Module[{curRow,outMat},
 	outMat = {};
 	
