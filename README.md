@@ -39,4 +39,6 @@ All of the actual functions and algorithms are in PhylogeneticMatroids.m.
     
 9. CFN_last_pair.m2
     - This file computes a degree bounded Grobner basis for the remaining pair of trees that matroidSeparate could not find     a certificate for
-  
+    
+10. K3P_last_pair_matroids.nb
+    - This file uses our matroidSeparateSZ algorithm to find a certificate that distuinguishes the matroids for the remaining pair of trees for the K3P model. This certificate is quite large though so verifying symbolically is probably not possible. Essentially these computations show that with high probability Conjecture 4.8 does not hold for the K3P model. 
